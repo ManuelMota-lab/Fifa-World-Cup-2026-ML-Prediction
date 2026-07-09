@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+worldcup-predictor/
+├── data/
+│   ├── raw/          # downloaded, never edited
+│   └── processed/    # your cleaned output
+├── notebooks/        # exploration only
+├── src/
+│   ├── data/         # loading, cleaning
+│   ├── features/     # feature engineering
+│   └── models/       # training, evaluation
+├── api/              # FastAPI service (Phase 5)
+├── tests/
+├── .gitignore
+├── requirements.txt
+└── README.md
