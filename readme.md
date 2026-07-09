@@ -71,7 +71,7 @@ pip install -r requirements.txt
 
 ## Limitations
 
-*(To be filled in — be honest here.)*
+*(To be filled in.)*
 
 ## Next steps
 
