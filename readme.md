@@ -1,19 +1,20 @@
-# World Cup Match Outcome Prediction
+# World Cup 2026 Scoreboard Prediction
 
-Predicting international football match outcomes from historical data, with the
-2026 FIFA World Cup as the live evaluation target.
+Predicting the final scoreline of international football matches from historical
+data, with the 2026 FIFA World Cup as the live evaluation target.
 
 ## Problem
 
-**Task:** Given only information available before kickoff, predict the match result
-as one of three classes — home win, draw, or away win.
+**Task:** Given only information available before kickoff, predict the final
+scoreline — home goals and away goals — for a match.
 
-**Evaluation metric:** log-loss (primary). I care about *calibrated probabilities*,
-not just whether the top pick is right — a model that says 70% should win ~70% of
-the time. Accuracy and a calibration curve are reported as secondary.
+**Evaluation metric:** Poisson deviance / log-likelihood on the predicted goal
+counts (primary), since goals are counts, not a continuous quantity. Accuracy of
+the derived match outcome (home win / draw / away win) is reported as a secondary,
+more interpretable metric.
 
-**Why log-loss was chosen before modeling:** picking the metric after seeing results
-invites choosing whichever one flatters the model.
+**Why this metric was chosen before modeling:** picking the metric after seeing
+results invites choosing whichever one flatters the model.
 
 ## Approach
 
@@ -33,32 +34,30 @@ from the past.
 
 ## Data
 
-- International football results (1872–present) — [source / link]
-- FIFA rankings over time — [source / link]
+- International football results, 1872–present, including historical team
+  name changes — [martj42/international_results](https://github.com/martj42/international_results)
+- Elo ratings for 2026 World Cup squads — [Kaggle: 2026 FIFA World Cup Historical Elo Ratings](https://www.kaggle.com/datasets/afonsofernandescruz/2026-fifa-world-cup-historical-elo-ratings)
+- EA FC 26 player ratings, for aggregating into squad-strength features —
+  [Kaggle: FC 26 (FIFA 26) Player Data](https://www.kaggle.com/datasets/rovnez/fc-26-fifa-26-player-data)
 
-Raw data is not committed to this repo. Download from the links above into `data/raw/`.
+Raw data is committed under `datasets/` (see `dataset_source.txt` for links).
 
 ## Results
 
 *(To be filled in.)*
 
-| Model                             | Log-loss | Accuracy |
-| --------------------------------- | -------- | -------- |
-| Baseline (always home)            | —       | —       |
-| Baseline (FIFA ranking favourite) | —       | —       |
-| Logistic regression               | —       | —       |
-| Gradient-boosted (XGBoost)        | —       | —       |
+| Model                              | Poisson deviance | Outcome accuracy |
+| ----------------------------------- | ----------------- | ----------------- |
+| Baseline (average goals per team)   | —                 | —                 |
+| Baseline (Elo-implied)              | —                 | —                 |
+| Poisson regression                  | —                 | —                 |
+| Gradient-boosted (XGBoost, Poisson) | —                 | —                 |
 
 ## Project structure
 
 ```
-data/          raw (gitignored) and processed datasets
-notebooks/     exploration only
-src/data/      loading and cleaning
-src/features/  feature engineering
-src/models/    training and evaluation
-api/           FastAPI service
-tests/
+datasets/        raw data (results, Elo ratings, EA FC player ratings)
+notebook.ipynb   loading, cleaning, feature engineering, modeling, evaluation
 ```
 
 ## Running it
